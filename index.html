@@ -306,7 +306,12 @@
       </div>
       <div class="modal-body">
         <p class="modal-intro">
-          Your API key is saved <strong>only inside your browser's localStorage</strong>. It is never logged, never sent to external servers, and never pushed to GitHub.
+          Your API key is stored in this browser's localStorage.
+          It is sent directly to your selected AI provider 
+          when generating study materials.
+          
+          Avoid using shared computers and never commit
+          API keys to GitHub.
         </p>
 
         <!-- Provider Selection -->
@@ -375,8 +380,9 @@
 
   <!-- Scripts: Modular architecture -->
 
-  <script src="./storage.js"></script>
-  <script src="./api.js"></script>
-  <script type="module" src="./app.js"></script>
+<script src="./storage.js"></script>
+<script src="./api.js"></script>
+<script src="./app.js"></script>
+  
 </body>
 </html>
