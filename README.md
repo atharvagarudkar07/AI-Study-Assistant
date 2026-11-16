@@ -228,3 +228,16 @@ Potential improvements include:
 StudyCraft AI demonstrates how modern web technologies and AI services can be combined to create an interactive educational application.
 
 The project applies DOM manipulation, asynchronous JavaScript, API integration, client-side storage, responsive design, and interactive learning techniques to provide a practical study assistance platform.
+
+
+## 📸 Project Screenshots
+
+### 🏠 Home Page
+![StudyCraft AI Homepage](homepage.png)
+
+### 📝 AI-Generated Summary
+![StudyCraft AI Summary](summery.png)
+
+### 🃏 Interactive Flashcards
+![StudyCraft AI Flashcards](flashcards.png)
+
