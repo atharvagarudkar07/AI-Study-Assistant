@@ -1,6 +1,5 @@
 # ⚡ StudyCraft AI — Smart AI Study Assistant
-> **Assignment 5: Advanced (With AI) — Web Technology Continuous Assessment**  
-> *Max Marks: 20/20*
+Advanced (With AI) — Web Technology Continuous Assessment**  
 
 StudyCraft AI is a responsive web application that transforms lecture notes, article excerpts, or topics into structured study material using an AI model. It automatically synthesizes a concise **Summary**, generates an interactive 5-question **Quiz** with scoring, and constructs active-recall **Flashcards** with smooth 3D flip animations.
 
