@@ -36,7 +36,7 @@ STUDY REQUIREMENTS:
 1. Summary Style: ${styleDescriptions[style] || styleDescriptions.balanced}
 2. Quiz Difficulty: ${difficultyDescriptions[difficulty] || difficultyDescriptions.medium}
 3. Flashcards: Generate exactly ${cardCount} high-impact flashcards.
-4. Quiz Questions: Generate exactly 5 multiple choice questions. Each question must have 4 options (labeled A, B, C, D) and specify the zero-based index of the correct option (0, 1, 2, or 3), plus a brief pedagogical explanation.
+4. Quiz Questions: Generate exactly 5 multiple-choice questions. Each question must have 4 options (labeled A, B, C, D) and specify the zero-based index of the correct option (0, 1, 2, or 3), plus a brief pedagogical explanation.
 
 CRITICAL INSTRUCTION:
 You MUST reply ONLY with a valid JSON object. Do not include markdown fences, backticks (\`\`\`json), or conversational preamble.
@@ -279,7 +279,7 @@ Your JSON must strictly adhere to this exact structure:
         // Stop immediately when the API quota is exceeded
         if (response.status === 429) {
           throw new Error(
-            'Gemini API quota or rate limit exceeded. '  
+            'Gemini API quota or rate limit exceeded. ' +  
             'Please check your Google AI Studio usage limits.'
             );
         }
