@@ -144,13 +144,6 @@ The application can be deployed using Vercel.
 - Improved progress tracking.
 - Personalized study recommendations.
 
-## 👨‍💻 Author
-
-**Name:** Your Full Name  
-**Department:** Computer Science and Engineering  
-**Section:** B  
-**Project:** Web Technology – Continuous Assessment Assignment 5
-
 ## 📄 License
 
 This project is developed for educational purposes as part of the Web Technology Continuous Assessment Assignment.
