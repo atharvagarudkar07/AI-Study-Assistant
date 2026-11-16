@@ -1,6 +1,4 @@
 # ⚡ StudyCraft AI — Smart AI Study Assistant
-> **Assignment 5: Advanced (With AI) — Web Technology Continuous Assessment**  
-> *Max Marks: 20/20*
 
 StudyCraft AI is a responsive web application that transforms lecture notes, article excerpts, or topics into structured study material using an AI model. It automatically synthesizes a concise **Summary**, generates an interactive 5-question **Quiz** with scoring, and constructs active-recall **Flashcards** with smooth 3D flip animations.
 
@@ -11,7 +9,7 @@ StudyCraft AI is a responsive web application that transforms lecture notes, art
 ### ✅ Required Core Features
 - [x] **Notes Input & Generation**: Flexible text area for raw notes or topics with sample presets.
 - [x] **Secure API Settings**: Settings modal where users input their API key. Stored exclusively in the client's `localStorage`—no server storage, no risk of leaking credentials to GitHub.
-- [x] **Fetch with async / await**: Uses modern `fetch()` with HTTP `POST`, custom headers, structured request body, and `async/await`.
+- [x] **Fetch with async/await**: Uses modern `fetch()` with HTTP `POST`, custom headers, structured request body, and `async/await`.
 - [x] **Three Output Sections (Tabs)**:
   - 📋 **Summary**: Clear formatted paragraphs and high-yield key takeaway bullet points.
   - 🧩 **Quiz**: 5 multiple-choice questions with option selection, immediate visual feedback (green for correct, red for incorrect), pedagogical explanations, and score tracking.
