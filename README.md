@@ -110,7 +110,12 @@ AI-Study-Assistant/
 ├── api.js
 ├── storage.js
 ├── README.md
-└── .gitignore
+├── .gitignore
+│
+└── screenshots/
+    ├── homepage.png
+    ├── summery.png
+    └── flashcards.png
 ```
 
 **File descriptions:**
