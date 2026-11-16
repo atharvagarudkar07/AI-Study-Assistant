@@ -334,7 +334,7 @@ Your JSON must strictly adhere to this exact structure:
       response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify(payload),
