@@ -335,7 +335,7 @@ Your JSON must strictly adhere to this exact structure:
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        
+          'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify(payload),
         signal: AbortSignal.timeout(30000)
