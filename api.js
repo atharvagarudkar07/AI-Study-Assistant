@@ -157,7 +157,13 @@ Your JSON must strictly adhere to this exact structure:
 
         // Rank models: flash models first (2.5 -> 2.0 -> 1.5 -> pro)
         const priorityOrder = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-flash-latest', 'gemini-2.5-pro', 'gemini-1.5-pro'];
+        const selectedModel = (initialModel || '')
+          .replace(/^models\//, '')
+          .trim();
         const ranked = [];
+        if (supported.includes(selectedModel)) {
+          ranked.push(selectedModel);
+        }
         
         // Add priority models that exist in the account
         priorityOrder.forEach(p => {
@@ -411,10 +417,15 @@ Your JSON must strictly adhere to this exact structure:
       if (!q.question || !Array.isArray(q.options) || q.options.length < 2) {
         throw new Error(`Validation failed: Quiz question #${idx + 1} is missing valid question text or options.`);
       }
-      if (typeof q.correctIndex !== 'number' || q.correctIndex < 0 || q.correctIndex >= q.options.length) {
-        // Fallback default index if malformed
-        q.correctIndex = 0;
-      }
+      if (
+        !Number.isInteger(q.correctIndex) ||
+        q.correctIndex < 0 ||
+        q.correctIndex >= q.options.length
+      ) {
+        throw new Error(
+          `Invalid correct answer index for question ${idx + 1}.`
+        );
+      }    
     });
 
     // Validation Check 3: Flashcards existence
