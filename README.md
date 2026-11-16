@@ -1,173 +1,158 @@
-# ⚡ StudyCraft AI — Smart AI Study Assistant
+# 🤖 AI Study Assistant
 
-StudyCraft AI is a responsive web application that transforms lecture notes, article excerpts, or topics into structured study material using an AI model. It automatically synthesizes a concise **Summary**, generates an interactive 5-question **Quiz** with scoring, and constructs active-recall **Flashcards** with smooth 3D flip animations.
+An AI-powered web application that helps students convert their class notes and study topics into easy-to-understand summaries, interactive quizzes, and flashcards using Artificial Intelligence.
 
----
+## 📌 Project Overview
 
-## 🌟 Feature Checklist
+The AI Study Assistant is a smart learning tool developed using HTML, CSS, and JavaScript. Students can paste their class notes or enter any topic, and the application uses an AI API to generate useful study materials.
 
-### ✅ Required Core Features
-- [x] **Notes Input & Generation**: Flexible text area for raw notes or topics with sample presets.
-- [x] **Secure API Settings**: Settings modal where users input their API key. Stored exclusively in the client's `localStorage`—no server storage, no risk of leaking credentials to GitHub.
-- [x] **Fetch with async/await**: Uses modern `fetch()` with HTTP `POST`, custom headers, structured request body, and `async/await`.
-- [x] **Three Output Sections (Tabs)**:
-  - 📋 **Summary**: Clear formatted paragraphs and high-yield key takeaway bullet points.
-  - 🧩 **Quiz**: 5 multiple-choice questions with option selection, immediate visual feedback (green for correct, red for incorrect), pedagogical explanations, and score tracking.
-  - 🗂️ **Flashcards**: Interactive cards flipping between prompt/question and answer.
-- [x] **Active Loading Indicator**: Animated AI pulse ring, shimmer progress bar, and status updates while generation is underway.
-- [x] **Double-Click Prevention**: The Generate button is disabled with an inline spinner while a request is in flight.
-- [x] **Study History with LocalStorage**: Saves previous study kits with timestamps; click to restore any session. Includes single-item deletion and a "Clear All" option.
-- [x] **Summary Export Options**:
-  - 📋 Copy to clipboard with animated confirmation feedback.
-  - 💾 Download as a `.txt` formatted study sheet.
-- [x] **Complete Error Handling**:
-  - Missing API key (with direct modal prompt).
-  - Empty input detection.
-  - Network disconnection / offline detection (`navigator.onLine`).
-  - HTTP error status codes (400 Bad Request, 401/403 Invalid API Key, 429 Rate Limit Exceeded, 500/503 AI Server Overload).
-  - Malformed AI responses (schema verification ensuring summary, quiz, and flashcards arrays exist).
-- [x] **Code Architecture**: Clean modular separation into HTML, CSS, and separate JavaScript files (`storage.js`, `api.js`, `app.js`).
-- [x] **Responsive UI**: Optimized for mobile phones, tablets, and desktop displays.
+This project combines AI integration with interactive web development to make learning easier, faster, and more effective.
 
-### 🚀 Extra Features Included (Extra-Feature Marks)
-1. **Dark / Light Mode Toggle (Compulsory)**: Seamless theme toggle with CSS custom properties; remembers the user's preference in `localStorage`.
-2. **Summary Style Selector**: Choose between *Standard (Structured)*, *Explain like I am 10*, *Exam-focused (High-yield)*, or *In-depth & Comprehensive*.
-3. **Text-to-Speech (TTS)**: Built-in Speech Synthesis API reads the summary aloud with Play, Pause, and Stop controls.
-4. **Interactive 3D Flashcard Flip & Mastery Tracker**: CSS 3D perspective card flip with "Mastered (Got It!)" and "Still Learning" buttons and live mastery counters. Supports keyboard shortcuts (`Space`/`Enter` to flip, `ArrowLeft`/`ArrowRight` to navigate).
-5. **Quiz Difficulty Selector**: Choose between *Easy (Foundational)*, *Medium (Application)*, or *Hard (Critical edge cases)*.
-6. **Quiz Progress Analytics**: Tracks quiz scores and accuracy over time in `localStorage`.
-7. **Live Character Counter & Warning**: Real-time character count with visual alerts for excessively long inputs.
-8. **History Search & Filter**: Instant search box in the history drawer to filter past sessions by topic or notes snippet.
-9. **Built-in Demo / Mock AI Mode**: Allows anyone to test and grade the complete app offline without entering an API key.
+## ✨ Features
 
----
+- **AI Summary Generator:** Converts lengthy notes into short and understandable summaries.
+- **AI Quiz Generator:** Creates 5 multiple-choice questions with options, correct answers, and scores.
+- **AI Flashcards:** Generates interactive flashcards with front and back content.
+- **Flip Flashcards:** Click on a flashcard to reveal its answer.
+- **Study History:** Saves previous generations using browser LocalStorage.
+- **Copy to Clipboard:** Copies generated summaries.
+- **Download Summary:** Downloads summaries as text files.
+- **Loading Indicator:** Displays loading status while AI generates content.
+- **Dark / Light Mode:** Switches between dark and light themes.
+- **Responsive Design:** Works on desktop, tablets, and mobile devices.
+- **API Key Settings:** Allows users to enter and save their own API key.
 
-## 📁 Project Structure
+## 🛠️ Technologies Used
 
-```
-ai-study-assistant/
+| Technology | Purpose |
+|---|---|
+| HTML5 | Webpage structure |
+| CSS3 | Styling and responsive design |
+| JavaScript | Application functionality |
+| AI API | AI-generated study materials |
+| Fetch API | Sending HTTP POST requests |
+| Async / Await | Handling asynchronous operations |
+| LocalStorage | Saving API settings, theme preferences, and history |
+
+## 📂 Project Structure
+
+```text
+AI-Study-Assistant/
 │
-├── index.html            # Semantic HTML5 markup, accessible ARIA roles, modals & tabs
+├── index.html
+|
 ├── css/
-│   └── styles.css        # Responsive CSS with Light & Dark theme variables & 3D card flips
+│   └── styles.css
+│
 ├── js/
-│   ├── storage.js        # LocalStorage controller: API keys, themes, history & quiz stats
-│   ├── api.js            # Prompt engineering, fetch() POST calls, HTTP error & JSON validation
-│   └── app.js            # UI controller: DOM event listeners, TTS, tabs, quiz & flashcards
-└── README.md             # Project documentation, API setup & Viva preparation guide
+│   ├── api.js
+│   ├── app.js
+│   └── storage.js
+│
+├── README.md
+|
+└── .gitignore
+ 
 ```
 
----
+## 🚀 Getting Started
 
-## 🔑 How to Get a Free API Key
+Follow these steps to run the project locally.
 
-### Option A: Google Gemini API (Recommended & Free)
-1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey).
-2. Sign in with your Google account.
-3. Click the blue **"Create API Key"** button.
-4. Select a project (or choose "Create API key in new project").
-5. Copy your API key (starts with `AIzaSy...`).
-6. In **StudyCraft AI**, click **⚙️ Settings**, paste your key into the API Key field, and click **Save Settings**.
+### 1. Clone the Repository
 
-> **Note on Free Tier Limits:** Google Gemini API offers a free tier (15 requests per minute, 1,500 requests per day) which is more than enough for study and evaluation.
-
-### Option B: Groq Cloud API (Alternative)
-1. Sign up for free at [Groq Console](https://console.groq.com/keys).
-2. Create an API key (starts with `gsk_...`).
-3. In **StudyCraft AI**, open **⚙️ Settings**, switch Provider to **Groq**, paste your key, and click **Save Settings**.
-
-### Option C: Demo / Mock Mode (No Key Needed)
-- Open **⚙️ Settings**, choose **Demo / Mock AI Mode**, and click **Save Settings**.
-- Generates realistic study kits instantly without requiring internet or API credentials.
-
----
-
-## 💻 How to Run Locally
-
-Because this project uses vanilla HTML, CSS, and modern JavaScript modules, you can run it using any simple local static server:
-
-### Method 1: Python HTTP Server (Built-in on Mac & Linux)
-Open your terminal in this project folder:
 ```bash
-python3 -m http.server 8000
+git clone https://github.com/yourusername/AI-Study-Assistant.git
 ```
-Then visit `http://localhost:8000` in your browser.
 
-### Method 2: VS Code Live Server Extension
-1. Open the project folder in VS Code.
-2. Right-click `index.html` and click **"Open with Live Server"**.
+### 2. Open the Project Folder
 
-### Method 3: Direct Browser Launch
-You can also directly double-click `index.html` in Finder / File Explorer to open it in Chrome, Safari, or Edge.
+```bash
+cd AI-Study-Assistant
+```
+
+### 3. Run the Application
+
+Open `index.html` in your web browser.
+
+You can also use the Live Server extension in Visual Studio Code.
+
+## 🔑 API Key Configuration
+
+The application requires an API key from a supported AI provider.
+
+Follow these steps:
+
+1. Visit the official website of your chosen AI provider.
+2. Create an account.
+3. Generate an API key using the provider's available API access.
+4. Open the AI Study Assistant.
+5. Navigate to the Settings section.
+6. Paste your API key into the API Key field.
+7. Save the settings.
+8. Enter your study notes or topic and click Generate.
+
+**Important:** Never share your personal API key or upload it to GitHub. The application stores the user's own key locally in the browser using LocalStorage, as required by this project. Browser-side storage is not secure against malicious scripts or browser access, so use an API key with appropriate limits and permissions.
+
+## ⚙️ How It Works
+
+1. The student enters notes or a study topic.
+2. JavaScript collects the input and API key.
+3. The application sends a POST request to the selected AI provider using the Fetch API.
+4. The AI processes the prompt and generates structured JSON.
+5. JavaScript parses and validates the response.
+6. The application displays the generated summary, quiz, and flashcards.
+7. Previous generations are stored in LocalStorage for future access.
+
+## 📱 Application Sections
+
+- **Summary:** Displays AI-generated study notes.
+- **Quiz:** Provides multiple-choice questions and calculates scores.
+- **Flashcards:** Helps students revise important concepts.
+- **History:** Displays previously generated study materials.
+- **Settings:** Allows users to configure their API key and preferences.
+
+## 🎯 Learning Objectives
+
+Through this project, the following concepts are implemented:
+
+- HTML structure and forms
+- CSS layouts and responsive design
+- JavaScript functions and objects
+- DOM manipulation and events
+- Arrays and JSON handling
+- Fetch API and HTTP POST requests
+- Async / Await and Promises
+- Error handling using Try / Catch
+- Browser LocalStorage
+- AI API integration
+
+## 🌐 Deployment
+
+The application can be deployed using Vercel.
+
+**Live Demo:** [Add Your Vercel Deployment Link Here]
+
+**GitHub Repository:** [Add Your GitHub Repository Link Here]
+
+## 🔮 Future Enhancements
+
+- Support for uploading PDF study notes.
+- Multiple AI provider support.
+- More quiz difficulty levels.
+- Additional languages.
+- Improved progress tracking.
+- Personalized study recommendations.
+
+## 👨‍💻 Author
+
+**Name:** Your Full Name  
+**Department:** Computer Science and Engineering  
+**Section:** B  
+**Project:** Web Technology – Continuous Assessment Assignment 5
+
+## 📄 License
+
+This project is developed for educational purposes as part of the Web Technology Continuous Assessment Assignment.
 
 ---
-
-## 🌐 How to Deploy (Vercel or Netlify)
-
-### Deploy to Netlify (Drag & Drop — 1 Minute)
-1. Log in to [Netlify](https://app.netlify.com/).
-2. Drag and drop the `ai-study-assistant` folder into the **Sites** upload area.
-3. Your site is live immediately!
-
-### Deploy to Vercel (via GitHub)
-1. Push this repository to your GitHub account:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit of StudyCraft AI"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/ai-study-assistant.git
-   git push -u origin main
-   ```
-2. Open [Vercel](https://vercel.com/), click **"Add New Project"**, and import your repository.
-3. Click **Deploy**.
-
----
-
-## 🎓 Viva / Demo Preparation Guide
-
-Be ready to explain how your code works in the oral evaluation (viva). Here is a breakdown of the key parts:
-
-### 1. The `fetch()` Call Breakdown (Found in `js/api.js`)
-```javascript
-const response = await fetch(url, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(payload)
-});
-```
-- **`url`**: The Google Gemini REST API endpoint:  
-  `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`  
-  The API key is passed securely via query parameters or Authorization headers.
-- **`method: 'POST'`**: We use POST because we are sending data (our prompt instructions and the user's notes) to the server.
-- **`headers: { 'Content-Type': 'application/json' }`**: Informs the server that the request body is formatted as a JSON string.
-- **`body: JSON.stringify(payload)`**: Serializes our JavaScript object into a JSON string containing the message parts and generation configuration (`responseMimeType: 'application/json'`).
-- **`async / await`**: Pauses execution of the asynchronous function until the Promise returned by `fetch()` resolves, without blocking the browser's UI thread.
-
-### 2. Status Code Handling
-```javascript
-if (!response.ok) {
-  // response.ok is false for status codes 400-599
-  if (response.status === 401 || response.status === 403) {
-    throw new Error('Invalid API Key');
-  } else if (response.status === 429) {
-    throw new Error('Rate limit exceeded');
-  }
-}
-```
-
-### 3. Response Validation & JSON Parsing
-```javascript
-const cleanJson = rawText.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-const parsed = JSON.parse(cleanJson);
-if (!parsed.summary || !Array.isArray(parsed.quiz) || !Array.isArray(parsed.flashcards)) {
-  throw new Error('Incomplete schema returned by AI');
-}
-```
-We strip any markdown fences in case the AI wraps its output, parse with `JSON.parse()` within a `try / catch` block to avoid application crashes, and check that all required fields (`summary`, `quiz`, `flashcards`) are present.
-
-### 4. API Key Security Guarantee
-The API key is stored only inside `localStorage.getItem('studycraft_api_key')`. It is **never** hardcoded into files, never committed to git, and never sent to any third-party server other than the official AI provider endpoint chosen by the user.
-
