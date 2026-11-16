@@ -1,149 +1,230 @@
-# 🤖 AI Study Assistant
+# ⚡ StudyCraft AI — Smart AI Study Assistant
 
-An AI-powered web application that helps students convert their class notes and study topics into easy-to-understand summaries, interactive quizzes, and flashcards using Artificial Intelligence.
+**Transform your study notes into AI-powered summaries, interactive quizzes, and flashcards.**
 
-## 📌 Project Overview
+StudyCraft AI is an interactive, responsive web application developed as part of a **Web Technology Continuous Assessment Project**. It helps students understand, revise, and retain educational concepts through AI-generated study materials and active learning tools.
 
-The AI Study Assistant is a smart learning tool developed using HTML, CSS, and JavaScript. Students can paste their class notes or enter any topic, and the application uses an AI API to generate useful study materials.
+🌐 **Live Website:** https://studycraft-ai-study-assistant.vercel.app/
 
-This project combines AI integration with interactive web development to make learning easier, faster, and more effective.
+💻 **GitHub Repository:** https://github.com/atharvagarudkar07/AI-Study-Assistant
 
-## ✨ Features
+---
 
-- **AI Summary Generator:** Converts lengthy notes into short and understandable summaries.
-- **AI Quiz Generator:** Creates 5 multiple-choice questions with options, correct answers, and scores.
-- **AI Flashcards:** Generates interactive flashcards with front and back content.
-- **Flip Flashcards:** Click on a flashcard to reveal its answer.
-- **Study History:** Saves previous generations using browser LocalStorage.
-- **Copy to Clipboard:** Copies generated summaries.
-- **Download Summary:** Downloads summaries as text files.
-- **Loading Indicator:** Displays loading status while AI generates content.
-- **Dark / Light Mode:** Switches between dark and light themes.
-- **Responsive Design:** Works on desktop, tablets, and mobile devices.
-- **API Key Settings:** Allows users to enter and save their own API key.
+## 📖 Project Overview
 
-## 🛠️ Technologies Used
+StudyCraft AI enables students to enter a topic or paste their study notes and generate a personalized study kit consisting of:
+
+- 📚 Structured AI-generated summaries
+- 🧠 Interactive multiple-choice quizzes
+- 🃏 Flashcards for active recall
+- 🔊 Text-to-speech explanations
+- 💾 Saved study sessions
+- 🌙 Dark and light themes
+
+The application integrates AI services using JavaScript's Fetch API and provides a responsive user interface built with HTML5 and CSS3.
+
+## ✨ Key Features
+
+### 1. AI-Powered Study Kit Generation
+
+Convert educational notes into structured learning materials using supported AI providers.
+
+- Google Gemini API integration
+- Groq API integration
+- Demo Mode without an API key
+- Customizable summary styles
+- Adjustable quiz difficulty
+- Selectable flashcard counts
+
+### 2. Smart Study Summaries
+
+Generate summaries containing an overview and key takeaways.
+
+Additional functionality includes:
+
+- Copy summary to clipboard
+- Download summary as a `.txt` file
+- Listen using browser text-to-speech
+
+### 3. Interactive Quiz System
+
+- Five multiple-choice questions per study kit
+- Four answer options per question
+- Automatic answer evaluation
+- Percentage-based scoring
+- Correct-answer highlighting
+- Explanations after submission
+- Retake quiz functionality
+
+### 4. Interactive Flashcards
+
+- Front-and-back flashcard interface
+- 3D card-flipping animation
+- Previous and next navigation
+- Keyboard navigation
+- Known and Learning progress tracking
+
+### 5. Study History
+
+StudyCraft AI uses browser LocalStorage to maintain study history.
+
+Users can:
+
+- Save generated study sessions
+- Restore previous sessions
+- Search study history
+- Delete individual sessions
+- Clear saved history
+
+### 6. Personalization
+
+- Dark and light mode
+- Summary style selection
+- Quiz difficulty selection
+- Flashcard count selection
+- AI provider configuration
+
+## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| HTML5 | Webpage structure |
-| CSS3 | Styling and responsive design |
+| HTML5 | Website structure |
+| CSS3 | Responsive design and animations |
 | JavaScript | Application functionality |
-| AI API | AI-generated study materials |
-| Fetch API | Sending HTTP POST requests |
-| Async / Await | Handling asynchronous operations |
-| LocalStorage | Saving API settings, theme preferences, and history |
+| Fetch API | AI service communication |
+| Google Gemini API | AI study material generation |
+| Groq API | Alternative AI provider |
+| LocalStorage | Settings and history persistence |
+| Web Speech API | Text-to-speech |
+| GitHub | Source code management |
+| Vercel | Website deployment |
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```text
 AI-Study-Assistant/
 │
 ├── index.html
-|
-├── css/
-│   └── styles.css
-│
-├── js/
-│   ├── api.js
-│   ├── app.js
-│   └── storage.js
-│
+├── styles.css
+├── app.js
+├── api.js
+├── storage.js
 ├── README.md
-|
 └── .gitignore
- 
 ```
 
-## 🚀 Getting Started
+**File descriptions:**
 
-Follow these steps to run the project locally.
+- `index.html` — Main application structure and interface
+- `styles.css` — Styling, themes, layout, and animations
+- `app.js` — User interface, event handling, quiz, flashcards, and rendering
+- `api.js` — AI provider integration and response validation
+- `storage.js` — LocalStorage management and sample notes
+- `README.md` — Project documentation
+- `.gitignore` — Git exclusion rules
 
-### 1. Clone the Repository
+## 🚀 Installation and Setup
+
+### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/AI-Study-Assistant.git
+git clone https://github.com/atharvagarudkar07/AI-Study-Assistant-.git
 ```
 
-### 2. Open the Project Folder
+### Step 2: Open the Project
 
-```bash
-cd AI-Study-Assistant
-```
+Open the project folder using Visual Studio Code.
 
-### 3. Run the Application
+### Step 3: Run the Website
 
-Open `index.html` in your web browser.
+Use the VS Code Live Server extension or another local development server to open `index.html`.
 
-You can also use the Live Server extension in Visual Studio Code.
+### Step 4: Configure AI Settings
 
-## 🔑 API Key Configuration
+1. Open the application.
+2. Click **Settings**.
+3. Select Google Gemini, Groq, or Demo Mode.
+4. Enter your API key if using a real AI provider.
+5. Save the settings.
 
-The application requires an API key from a supported AI provider.
+### Step 5: Generate a Study Kit
 
-Follow these steps:
+1. Enter a topic or paste study notes.
+2. Select a summary style.
+3. Choose quiz difficulty.
+4. Select the flashcard count.
+5. Click **Generate Study Kit**.
+6. Review the summary, quiz, and flashcards.
 
-1. Visit the official website of your chosen AI provider.
-2. Create an account.
-3. Generate an API key using the provider's available API access.
-4. Open the AI Study Assistant.
-5. Navigate to the Settings section.
-6. Paste your API key into the API Key field.
-7. Save the settings.
-8. Enter your study notes or topic and click Generate.
+## 🧪 Testing
 
-**Important:** Never share your personal API key or upload it to GitHub. The application stores the user's own key locally in the browser using LocalStorage, as required by this project. Browser-side storage is not secure against malicious scripts or browser access, so use an API key with appropriate limits and permissions.
+The following application features were manually tested:
 
-## ⚙️ How It Works
+| Feature | Result |
+|---|---|
+| Website styling | Passed |
+| Settings modal | Passed |
+| Demo Mode | Passed |
+| Sample notes | Passed |
+| Study kit generation | Passed |
+| Quiz evaluation | Passed |
+| Flashcard navigation | Passed |
+| Study history | Passed |
+| Theme switching | Passed |
 
-1. The student enters notes or a study topic.
-2. JavaScript collects the input and API key.
-3. The application sends a POST request to the selected AI provider using the Fetch API.
-4. The AI processes the prompt and generates structured JSON.
-5. JavaScript parses and validates the response.
-6. The application displays the generated summary, quiz, and flashcards.
-7. Previous generations are stored in LocalStorage for future access.
+A successful study kit generation was also observed on the deployed Vercel website.
 
-## 📱 Application Sections
+## 🔐 API Key and Security Notes
 
-- **Summary:** Displays AI-generated study notes.
-- **Quiz:** Provides multiple-choice questions and calculates scores.
-- **Flashcards:** Helps students revise important concepts.
-- **History:** Displays previously generated study materials.
-- **Settings:** Allows users to configure their API key and preferences.
+StudyCraft AI currently stores user-provided API keys in browser LocalStorage and sends them directly to the selected AI provider for authentication.
 
-## 🎯 Learning Objectives
+**Important:**
 
-Through this project, the following concepts are implemented:
+- Never commit API keys to GitHub.
+- Avoid entering sensitive keys on shared devices.
+- Browser LocalStorage is not secure storage for application secrets.
+- Demo Mode is available without an API key.
+- A secure backend or serverless proxy is recommended for production use.
 
-- HTML structure and forms
-- CSS layouts and responsive design
-- JavaScript functions and objects
-- DOM manipulation and events
-- Arrays and JSON handling
-- Fetch API and HTTP POST requests
-- Async/Await and Promises
-- Error handling using Try / Catch
-- Browser LocalStorage
-- AI API integration
+## 🌍 Deployment
 
-## 🌐 Deployment
+The application is deployed using Vercel.
 
-The application can be deployed using Vercel.
+**Live Application:**
 
-**Live Demo:** [Add Your Vercel Deployment Link Here]
+https://studycraft-ai-study-assistant.vercel.app/
+
+**Source Code:**
+
+https://github.com/atharvagarudkar07/AI-Study-Assistant-
 
 ## 🔮 Future Enhancements
 
-- Support for uploading PDF study notes.
-- Multiple AI provider support.
-- More quiz difficulty levels.
-- Additional languages.
-- Improved progress tracking.
-- Personalized study recommendations.
+Potential improvements include:
 
-## 📄 License
+- Secure backend API integration
+- PDF and document upload support
+- Exportable PDF study notes
+- Advanced quiz analytics
+- Personalized revision recommendations
+- Spaced-repetition scheduling
+- User accounts and cloud synchronization
+- Improved mobile accessibility
 
-This project is developed for educational purposes as part of the Web Technology Continuous Assessment Assignment.
+## 🎓 Academic Project
 
----
+**Project Name:** StudyCraft AI — Smart AI Study Assistant
+
+**Subject:** Web Technology
+
+**Category:** AI-Integrated Educational Web Application
+
+**Development:** HTML, CSS, and JavaScript
+
+**Deployment Platform:** Vercel
+
+## 📄 Conclusion
+
+StudyCraft AI demonstrates how modern web technologies and AI services can be combined to create an interactive educational application.
+
+The project applies DOM manipulation, asynchronous JavaScript, API integration, client-side storage, responsive design, and interactive learning techniques to provide a practical study assistance platform.
