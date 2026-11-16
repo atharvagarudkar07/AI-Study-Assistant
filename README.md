@@ -122,7 +122,7 @@ Through this project, the following concepts are implemented:
 - DOM manipulation and events
 - Arrays and JSON handling
 - Fetch API and HTTP POST requests
-- Async / Await and Promises
+- Async/Await and Promises
 - Error handling using Try / Catch
 - Browser LocalStorage
 - AI API integration
@@ -132,8 +132,6 @@ Through this project, the following concepts are implemented:
 The application can be deployed using Vercel.
 
 **Live Demo:** [Add Your Vercel Deployment Link Here]
-
-**GitHub Repository:** [Add Your GitHub Repository Link Here]
 
 ## 🔮 Future Enhancements
 
