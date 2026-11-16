@@ -275,6 +275,27 @@ Your JSON must strictly adhere to this exact structure:
           throw new Error(`Authentication Error (${response.status}): ${msg}. Please re-check your API key in Settings.`);
         }
 
+        // Stop immediately when the API quota is exceeded
+        if (response.status === 429) {
+          throw new Error(
+            'Gemini API quota or rate limit exceeded. '  
+            'Please check your Google AI Studio usage limits.'
+            );
+        }
+        
+        // Stop on server errors instead of repeatedly trying models
+        if (response.status >= 500) {
+          throw new Error(
+            `Gemini server error (${response.status}): ${msg}`
+          );
+        }
+        // Stop on other unsuccessful requests
+        if (response.status !== 400 && response.status !== 404) {
+          throw new Error(
+            `Gemini API error (${response.status}): ${msg}`
+          );
+        }
+        
         // If 404 Model Not Found, continue to next candidate
         if (response.status === 404) {
           break; // Break inner payload loop, try next model
@@ -312,10 +333,11 @@ Your JSON must strictly adhere to this exact structure:
       response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
+          'Content-Type': 'application/json'
+        
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(30000)
       });
     } catch (networkErr) {
       console.error('Fetch network error:', networkErr);
@@ -499,7 +521,7 @@ Your JSON must strictly adhere to this exact structure:
             'Reading instructions before system deployment',
             'Allocating sufficient memory headroom',
             'Implementing modular architectural separation'
-          ],
+          ], 
           correctIndex: 0,
           explanation: 'Default settings are general-purpose; critical workloads require tailored tuning.'
         },
