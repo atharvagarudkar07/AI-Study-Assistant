@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyCraft AI — Smart AI Study Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-theme="light">
+  <!-- Toast Notifications -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="logo-icon">⚡</div>
+        <div class="brand-text">
+          <h1>StudyCraft <span class="badge-ai">AI</span></h1>
+          <p class="tagline">Turn your notes into summaries, interactive quizzes & flashcards</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggleBtn" class="icon-btn" title="Toggle Dark/Light Mode" aria-label="Toggle Dark or Light theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+        <button id="openHistoryBtn" class="btn btn-secondary btn-sm" aria-label="Open study history">
+          <span>📚 History</span>
+          <span id="historyBadge" class="history-count-badge">0</span>
+        </button>
+        <button id="openSettingsBtn" class="btn btn-primary btn-sm" aria-label="Open API settings">
+          <span>⚙️ Settings</span>
+          <span id="keyStatusIndicator" class="status-dot warning" title="API Key not configured"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-main">
+    <div class="content-wrapper">
+      
+      <!-- Input Section -->
+      <section class="card input-card" aria-labelledby="input-heading">
+        <div class="card-header">
+          <h2 id="input-heading">📝 Input Notes or Topic</h2>
+          <div class="quick-samples">
+            <span class="samples-label">Quick Sample:</span>
+            <button type="button" class="sample-chip" data-sample="photosynthesis">🌿 Photosynthesis</button>
+            <button type="button" class="sample-chip" data-sample="os_memory">💻 OS Memory Mgt</button>
+            <button type="button" class="sample-chip" data-sample="french_rev">⚔️ French Revolution</button>
+          </div>
+        </div>
+
+        <form id="studyForm">
+          <div class="form-group">
+            <label for="notesInput" class="visually-hidden">Notes or Topic Content</label>
+            <textarea 
+              id="notesInput" 
+              name="notes"
+              rows="6" 
+              placeholder="Paste your lecture notes, article excerpts, textbook paragraphs, or simply type a topic (e.g. 'How does HTTP/2 work?')..."
+              required
+            ></textarea>
+            <div class="textarea-footer">
+              <div id="charCounter" class="char-counter">0 characters</div>
+              <div id="charWarning" class="char-warning hidden">⚠️ Text is very long, AI generation might take slightly longer.</div>
+            </div>
+          </div>
+
+          <!-- Controls: Style, Quiz Difficulty & Provider -->
+          <div class="controls-grid">
+            <div class="control-item">
+              <label for="studyStyleSelect">🎯 Summary Style</label>
+              <select id="studyStyleSelect">
+                <option value="balanced" selected>Standard (Clear & Structured)</option>
+                <option value="child">Explain like I am 10</option>
+                <option value="exam">Exam-focused (High-yield bullets)</option>
+                <option value="detailed">In-depth & Comprehensive</option>
+              </select>
+            </div>
+
+            <div class="control-item">
+              <label for="quizDifficultySelect">⚡ Quiz Difficulty</label>
+              <select id="quizDifficultySelect">
+                <option value="easy">Easy (Definitions & Concepts)</option>
+                <option value="medium" selected>Medium (Application & Analysis)</option>
+                <option value="hard">Hard (Critical Edge Cases)</option>
+              </select>
+            </div>
+
+            <div class="control-item">
+              <label for="numCardsSelect">🗂️ Flashcards Count</label>
+              <select id="numCardsSelect">
+                <option value="5" selected>5 Flashcards</option>
+                <option value="8">8 Flashcards</option>
+                <option value="10">10 Flashcards</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Generate Action Bar -->
+          <div class="form-actions">
+            <button type="submit" id="generateBtn" class="btn btn-primary btn-lg">
+              <span class="btn-text">🚀 Generate Study Kit</span>
+              <span class="btn-spinner hidden"></span>
+            </button>
+            <button type="button" id="clearBtn" class="btn btn-text" title="Clear input">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Loading State -->
+      <section id="loadingSection" class="card loading-card hidden" aria-live="polite">
+        <div class="loader-content">
+          <div class="ai-pulse-ring">
+            <span class="sparkle-icon">✨</span>
+          </div>
+          <h3 id="loadingStatusText">AI is reading your notes...</h3>
+          <p class="loading-subtext">Synthesizing summaries, constructing 5 quiz questions, and generating active-recall flashcards.</p>
+          <div class="progress-bar-container">
+            <div class="progress-bar-animated"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Section -->
+      <section id="resultsSection" class="results-container hidden" aria-label="Generated Study Material">
+        
+        <!-- Navigation Tabs -->
+        <nav class="tabs-nav" role="tablist">
+          <button id="tabSummary" class="tab-btn active" role="tab" aria-selected="true" aria-controls="panelSummary">
+            📋 Summary
+          </button>
+          <button id="tabQuiz" class="tab-btn" role="tab" aria-selected="false" aria-controls="panelQuiz">
+            🧩 Quiz <span id="quizBadge" class="tab-pill">5 Qs</span>
+          </button>
+          <button id="tabFlashcards" class="tab-btn" role="tab" aria-selected="false" aria-controls="panelFlashcards">
+            🗂️ Flashcards <span id="cardsBadge" class="tab-pill">0</span>
+          </button>
+        </nav>
+
+        <!-- Tab 1: Summary Panel -->
+        <div id="panelSummary" class="tab-panel active" role="tabpanel" aria-labelledby="tabSummary">
+          <div class="card result-card">
+            <div class="result-toolbar">
+              <div class="result-title-group">
+                <h3 id="summaryTopicTitle">Summary Overview</h3>
+                <span id="summaryMetaBadge" class="meta-badge">Exam Style</span>
+              </div>
+              <div class="toolbar-actions">
+                <button id="ttsPlayBtn" class="btn btn-secondary btn-sm" title="Read aloud with text-to-speech">
+                  <span id="ttsIcon">🔊</span> <span id="ttsText">Read Aloud</span>
+                </button>
+                <button id="copySummaryBtn" class="btn btn-secondary btn-sm" title="Copy summary to clipboard">
+                  📋 Copy
+                </button>
+                <button id="downloadSummaryBtn" class="btn btn-secondary btn-sm" title="Download as text file">
+                  💾 Download .txt
+                </button>
+              </div>
+            </div>
+
+            <!-- Audio Controller (when playing TTS) -->
+            <div id="ttsControls" class="tts-bar hidden">
+              <span>Speaking...</span>
+              <button id="ttsPauseBtn" class="tts-subbtn">Pause</button>
+              <button id="ttsStopBtn" class="tts-subbtn">Stop</button>
+            </div>
+
+            <!-- Formatted Summary Content -->
+            <div id="summaryBody" class="summary-body">
+              <!-- Injected by JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Quiz Panel -->
+        <div id="panelQuiz" class="tab-panel hidden" role="tabpanel" aria-labelledby="tabQuiz">
+          <div class="card result-card">
+            <div class="quiz-header">
+              <div class="quiz-info">
+                <h3>Knowledge Check</h3>
+                <p>Answer the 5 multiple choice questions below and see your score.</p>
+              </div>
+              <div class="quiz-stats-box">
+                <div class="stat-item">
+                  <span class="stat-label">Your Score</span>
+                  <span id="quizScoreDisplay" class="stat-value">— / 5</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Accuracy</span>
+                  <span id="quizPercentageDisplay" class="stat-value">—%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="quizContainer" class="quiz-questions-list">
+              <!-- Injected by JavaScript -->
+            </div>
+
+            <!-- Quiz Actions -->
+            <div class="quiz-footer">
+              <button id="submitQuizBtn" class="btn btn-primary btn-md">Check Answers</button>
+              <button id="retakeQuizBtn" class="btn btn-secondary btn-md hidden">🔄 Retake Quiz</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Flashcards Panel -->
+        <div id="panelFlashcards" class="tab-panel hidden" role="tabpanel" aria-labelledby="tabFlashcards">
+          <div class="card result-card flashcards-wrapper">
+            <div class="flashcard-header">
+              <div>
+                <h3>Interactive Flashcards</h3>
+                <p>Click on the card to flip between Question and Answer.</p>
+              </div>
+              <div class="mastery-summary">
+                <span class="mastery-pill known">Mastered: <strong id="knownCount">0</strong></span>
+                <span class="mastery-pill learning">Learning: <strong id="learningCount">0</strong></span>
+              </div>
+            </div>
+
+            <!-- Active Flashcard 3D Scene -->
+            <div class="flashcard-stage">
+              <div id="activeFlashcard" class="flashcard-3d" tabindex="0" role="button" aria-label="Flashcard. Click to flip.">
+                <div class="flashcard-face flashcard-front">
+                  <span class="card-side-tag">Question</span>
+                  <div class="card-content-inner">
+                    <p id="cardFrontText">Loading front...</p>
+                  </div>
+                  <span class="flip-hint">👆 Click card or press Space to flip</span>
+                </div>
+                <div class="flashcard-face flashcard-back">
+                  <span class="card-side-tag answer-tag">Answer</span>
+                  <div class="card-content-inner">
+                    <p id="cardBackText">Loading back...</p>
+                  </div>
+                  <span class="flip-hint">👆 Click to flip back</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flashcard Carousel Controls -->
+            <div class="flashcard-navigation">
+              <button id="prevCardBtn" class="nav-arrow-btn" aria-label="Previous flashcard">← Previous</button>
+              <span id="cardCounter" class="card-counter-indicator">Card 1 of 5</span>
+              <button id="nextCardBtn" class="nav-arrow-btn" aria-label="Next flashcard">Next →</button>
+            </div>
+
+            <!-- Card Mastery Toggles -->
+            <div class="flashcard-actions">
+              <button id="markUnknownBtn" class="btn btn-learning">
+                🔄 Still Learning
+              </button>
+              <button id="flipCardBtn" class="btn btn-secondary">
+                🔄 Flip Card
+              </button>
+              <button id="markKnownBtn" class="btn btn-mastered">
+                ✅ Got It! (Mastered)
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- History Drawer Modal -->
+  <aside id="historyDrawer" class="drawer hidden" aria-labelledby="historyDrawerHeading" role="dialog" aria-modal="true">
+    <div class="drawer-overlay" id="historyOverlay"></div>
+    <div class="drawer-content">
+      <div class="drawer-header">
+        <h3 id="historyDrawerHeading">📚 Study History</h3>
+        <button id="closeHistoryBtn" class="icon-btn" aria-label="Close history drawer">✕</button>
+      </div>
+
+      <div class="drawer-search">
+        <input type="text" id="historySearchInput" placeholder="🔍 Search past notes or topics..." aria-label="Search past notes">
+      </div>
+
+      <div class="history-stats-bar">
+        <span id="historyTotalCount">0 saved sessions</span>
+        <button id="clearAllHistoryBtn" class="btn-link-danger">Clear All History</button>
+      </div>
+
+      <div id="historyList" class="history-list">
+        <!-- Injected by JavaScript -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsHeading">
+    <div class="modal-overlay" id="settingsOverlay"></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="settingsHeading">⚙️ AI API Settings</h3>
+        <button id="closeSettingsBtn" class="icon-btn" aria-label="Close settings">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-intro">
+          Your API key is saved <strong>only inside your browser's localStorage</strong>. It is never logged, never sent to external servers, and never pushed to GitHub.
+        </p>
+
+        <!-- Provider Selection -->
+        <div class="form-group">
+          <label for="apiProviderSelect">AI Provider</label>
+          <select id="apiProviderSelect">
+            <option value="gemini" selected>Google Gemini (Recommended & Free)</option>
+            <option value="groq">Groq (Llama-3 / Fast Free Tier)</option>
+            <option value="mock">Demo / Mock AI Mode (No API key needed)</option>
+          </select>
+        </div>
+
+        <!-- API Key Input -->
+        <div class="form-group" id="apiKeyGroup">
+          <label for="apiKeyInput">API Key</label>
+          <div class="input-with-action">
+            <input 
+              type="password" 
+              id="apiKeyInput" 
+              placeholder="Paste your API key here (AIzaSy... or gsk_...)"
+              autocomplete="off"
+            >
+            <button type="button" id="toggleKeyVisibilityBtn" class="input-action-btn" title="Toggle visibility">👁️</button>
+          </div>
+          <div id="keyHelpText" class="form-help">
+            Get a free Google Gemini key in 1 minute from 
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio</a>.
+          </div>
+        </div>
+
+        <!-- Model selection (Optional/Advanced) -->
+        <div class="form-group" id="modelSelectGroup">
+          <label for="modelSelect">Model</label>
+          <select id="modelSelect">
+            <option value="gemini-2.0-flash" selected>gemini-2.0-flash (Fast, Generous Free Quota)</option>
+            <option value="gemini-2.5-flash">gemini-2.5-flash (Newest Standard)</option>
+            <option value="gemini-1.5-flash">gemini-1.5-flash (Classic Flash)</option>
+            <option value="gemini-1.5-flash-latest">gemini-1.5-flash-latest</option>
+            <option value="gemini-1.5-pro">gemini-1.5-pro (More Detailed)</option>
+          </select>
+        </div>
+
+        <div class="settings-guide-card">
+          <h4>💡 Free API Setup Instructions</h4>
+          <ol>
+            <li>Visit <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio</a>.</li>
+            <li>Click <strong>"Create API Key"</strong>.</li>
+            <li>Copy and paste the key above, then click <strong>"Save Settings"</strong>.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="removeApiKeyBtn" class="btn btn-danger btn-sm">Remove Key</button>
+        <button type="button" id="saveSettingsBtn" class="btn btn-primary btn-md">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>StudyCraft AI — Web Technology Continuous Assessment Project</p>
+      <p class="footer-disclaimer">Zero server footprint. API keys remain safe in local browser storage.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts: Modular architecture -->
+  <script src="js/storage.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
