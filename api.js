@@ -5,6 +5,9 @@
  */
 
 const ApiManager = {
+  // Your existing API functions
+};
+
   /**
    * Constructs the structured system instruction and user prompt.
    * Directs the AI to strictly return a valid JSON object matching our schema.
